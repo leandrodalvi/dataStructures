@@ -1,12 +1,10 @@
-exports.qs = quicksort;
-
-function quicksort(A = [], p = 0, r = A.length){
+export default function quicksort(A = [], p = 0, r = A.length - 1){
     if(p<r){
         const q = partition(A, p, r);
-        quicksort(A, p, q - 1)
-        quicksort(A, q + 1, r)
+        quicksort(A, p, q - 1);
+        quicksort(A, q + 1, r);
     }else{
-        throw new Error("Second parameter MUST be less than third one")
+        return;
     }
 }
 
