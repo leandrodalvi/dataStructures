@@ -38,6 +38,14 @@ func checkHeight(root *Node) int {
 
 }
 
+func calcBalance(node *Node) int {
+	if node == nil {
+		return 0
+	} else {
+		return checkHeight(node.right) - checkHeight(node.left)
+	}
+}
+
 func insertOnTree(tree *AVL, key string, value int) {
 	if tree.root == nil {
 		tree.root = &Node{key: key, value: value, right: nil, left: nil}
@@ -56,12 +64,30 @@ func insertNode(node *Node, key string, value int) {
 		} else {
 			insertNode(node.left, key, value)
 		}
+		//After new node already inserted(or we just can't go deeper this way)
+		//lets check for unbalances
+		if calcBalance(node) < -1 {
+			if calcBalance(node.left) > 0 {
+				node.left = leftRotation(node.left)
+			} else {
+				node.left = rightRotation(node.left)
+			}
+		}
 	}
 	if node.key <= key {
 		if node.right == nil {
 			node.right = &Node{key: key, value: value, right: nil, left: nil}
 		} else {
 			insertNode(node.right, key, value)
+		}
+		//After new node already inserted(or we just can't go deeper this way)
+		//lets check for unbalances
+		if calcBalance(node) > 1 {
+			if calcBalance(node.left) < 0 {
+				node.right = rightRotation(node.right)
+			} else {
+				node.right = leftRotation(node.right)
+			}
 		}
 	}
 
@@ -88,7 +114,7 @@ func toString(root *Node) {
 		return
 	} else {
 		toString(root.left)
-		println(root.value)
+		println(root.key)
 		toString(root.right)
 	}
 }

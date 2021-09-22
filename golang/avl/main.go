@@ -12,7 +12,6 @@ func main() {
 	insertOnTree(avlTree, "leandro", 98)
 	insertOnTree(avlTree, "quincas", 11)
 
-	println(checkHeight(avlTree.root.left))
-	println(checkHeight(avlTree.root.right))
+	toString(avlTree.root)
 
 }
