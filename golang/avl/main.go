@@ -21,12 +21,6 @@ func regularPopulate(avlTree *AVL) {
 	insertOnTree(avlTree, "giovanna", 2)
 }
 
-func forceUnbalancePopulation(avlTree *AVL) {
-	insertOnTree(avlTree, "carl", 22)
-	insertOnTree(avlTree, "ben", 48)
-	insertOnTree(avlTree, "adam", 64)
-}
-
 func main() {
 	avlTree := createNewTree()
 	regularPopulate(avlTree)

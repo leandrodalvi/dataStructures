@@ -112,6 +112,23 @@ func checkAndFixBalance(node *Node, avlTree *AVL) {
 	}
 }
 
+func successor(node *Node) *Node {
+	if node.right != nil {
+		rightNode := node.right
+		for rightNode.left != nil {
+			rightNode = rightNode.left
+		}
+		return rightNode
+	} else {
+		father := node.parent
+		for father != nil && node == father.right {
+			node = father
+			father = node.parent
+		}
+		return father
+	}
+}
+
 //tree operations
 
 func search(root *Node, key string) *Node {
@@ -161,5 +178,59 @@ func insertNode(node *Node, key string, value int, avlTree *AVL) {
 		//lets check for unbalances
 		checkAndFixBalance(node, avlTree)
 	}
+}
 
+func removeNode(tree *AVL, key string) {
+	remove(tree.root, key, tree)
+}
+
+func remove(node *Node, key string, tree *AVL) {
+	if node != nil {
+		if node.key > key {
+			remove(node.left, key, tree)
+		}
+		if node.key < key {
+			remove(node.right, key, tree)
+		}
+		if node.key == key {
+			removeAfterFind(node, tree)
+		}
+	}
+}
+
+func removeAfterFind(node *Node, tree *AVL) {
+	var aux *Node = nil
+	if node.left == nil || node.right == nil {
+		if node.parent == nil {
+			tree.root = nil
+			node = nil
+			return
+		}
+		aux = node
+	} else {
+		aux = successor(node)
+		node.key = aux.key
+	}
+	var aux2 *Node = nil
+	if aux.left != nil {
+		aux2 = aux.left
+	} else {
+		aux2 = aux.right
+	}
+
+	if aux2.parent != nil {
+		aux2.parent = aux.parent
+	}
+
+	if aux.parent == nil {
+		tree.root = aux2
+	} else {
+		if aux == aux.parent.left {
+			aux.parent.left = aux2
+		} else {
+			aux.parent.right = aux2
+		}
+		checkAndFixBalance(aux.parent, tree)
+	}
+	aux = nil
 }
