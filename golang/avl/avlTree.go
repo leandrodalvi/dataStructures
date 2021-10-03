@@ -210,6 +210,7 @@ func removeAfterFind(node *Node, tree *AVL) {
 	} else {
 		aux = successor(node)
 		node.key = aux.key
+		node.value = aux.value
 	}
 	var aux2 *Node = nil
 	if aux.left != nil {
@@ -218,7 +219,7 @@ func removeAfterFind(node *Node, tree *AVL) {
 		aux2 = aux.right
 	}
 
-	if aux2.parent != nil {
+	if aux2 != nil {
 		aux2.parent = aux.parent
 	}
 

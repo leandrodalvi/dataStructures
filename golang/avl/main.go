@@ -21,9 +21,20 @@ func regularPopulate(avlTree *AVL) {
 	insertOnTree(avlTree, "giovanna", 2)
 }
 
+func massRemoval(avl *AVL) {
+	removeNode(avl, "quincas")
+	removeNode(avl, "rogerinho")
+	removeNode(avl, "apolo")
+	removeNode(avl, "asds")
+	removeNode(avl, "pedro")
+	removeNode(avl, "giovanna")
+}
+
 func main() {
 	avlTree := createNewTree()
 	regularPopulate(avlTree)
+
+	massRemoval(avlTree)
 
 	println("Printing the tree...")
 	toString(avlTree.root)
